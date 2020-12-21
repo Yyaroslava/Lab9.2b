@@ -21,12 +21,11 @@ struct Student {
         int mark_ch_meth;
         int mark_ped;
     };
-
 };
 
 void Create(Student*& p, int& N);
 void Print(Student* p, const int N);
-void Print_I(int* ip, const int N);
+void Print_I(Student* p, const int N, int* ip);
 void Sort(Student* p, const int N);
 int* Sort_I(Student* p, const int N);
 int BinSearch(Student* p, const int N, const string prizv, const int kurs, const double average);
@@ -68,7 +67,7 @@ int main() {
                 continue;
             }
             int* ip = Sort_I(p, N);
-            Print_I(ip, N);
+            Print_I(p, N, ip);
         }
         if (action == 4) {
             if (N == 0) {
@@ -191,12 +190,39 @@ void Print(Student* p, const int N) {
     cout << "===========================================================================================================================================" << endl;
 }
 
-void Print_I(int* ip, const int N) {
-    cout << "Індекс: ";
+void Print_I(Student* p, const int N, int* ip) {
+    cout << "===========================================================================================================================================" << endl;
+    cout << "| № |   Прізвище   |  Курс  |      Спеціальність      | Фізика | Математика | Програмування | Чисельні методи | Педагогіка | Середній бал |" << endl;
+    cout << "-------------------------------------------------------------------------------------------------------------------------------------------" << endl;
+
     for (int i = 0; i < N; i++) {
-        cout << ip[i] << " ";
+        cout << "| " << i + 1 << " ";
+        cout << "| " << setw(12) << left << p[ip[i]].prizv << " ";
+        cout << "|    " << p[ip[i]].kurs << "   ";
+        cout << "| " << setw(23) << left << spesialnistStr[p[ip[i]].spesialnist] << " ";
+        cout << "| " << setw(6) << right << p[ip[i]].mark_phys << " ";
+        cout << "| " << setw(10) << right << p[ip[i]].mark_math << " ";
+        switch (p[ip[i]].spesialnist) {
+        case KN:
+            cout << "| " << setw(13) << right << p[ip[i]].mark_prog << " ";
+            cout << "|                 ";
+            cout << "|            ";
+            break;
+        case INF:
+            cout << "|               ";
+            cout << "| " << setw(15) << right << p[ip[i]].mark_ch_meth << " ";
+            cout << "|            ";
+            break;
+        default:
+            cout << "|               ";
+            cout << "|                 ";
+            cout << "| " << setw(10) << right << p[ip[i]].mark_ped << " ";
+            break;
+        }
+        cout << "| " << setw(12) << right << Average_Mark(p[ip[i]]) << " ";
+        cout << "|" << endl;
     }
-    cout << endl;
+    cout << "===========================================================================================================================================" << endl;
 }
 
 // сортування масиву методом бульбашки
